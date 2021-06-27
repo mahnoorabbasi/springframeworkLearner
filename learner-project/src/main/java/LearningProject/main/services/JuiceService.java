@@ -16,4 +16,10 @@ public interface JuiceService {
 
 	JuiceDTO getJuiceById(UUID juiceId);
 
+	JuiceDTO saveNewJuice(JuiceDTO juiceDto);
+
+	void updateJuiceDTO(UUID juiceId, JuiceDTO juiceDTO);
+
+	void deleteJuiceDTO(UUID juiceId);
+
 }
