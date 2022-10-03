@@ -1,5 +1,6 @@
 package com.mahnoor.springmvc.bootstrap;
 
+import com.mahnoor.springmvc.domain.Address;
 import com.mahnoor.springmvc.domain.Customer;
 import com.mahnoor.springmvc.domain.Product;
 import com.mahnoor.springmvc.services.CustomerService;
@@ -32,29 +33,24 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
     }
 
     private void loadAllCustomers() {
+
         Customer customer= new Customer("Mahnoor1","Ababsi",
-                "mabbasi@xavor.com", "9234", "AD1", "AD2", "Lahore",
-                "Punjab", "5400");
+                "mabbasi@xavor.com","0909",new Address(), new Address());
        customerService.saveOrUpdate(customer);
         customer= new Customer("Mahnoor2","Ababsi",
-                "mabbasi@xavor.com", "9234", "AD1", "AD2", "Lahore",
-                "Punjab", "5400");
+                "mabbasi@xavor.com","0909",new Address(), new Address());
         customerService.saveOrUpdate(customer);
         customer= new Customer("Mahnoor3","Ababsi",
-                "mabbasi@xavor.com", "9234", "AD1", "AD2", "Lahore",
-                "Punjab", "5400");
+                "mabbasi@xavor.com", "0909",new Address(), new Address());
         customerService.saveOrUpdate(customer);
         customer= new Customer("Mahnoor4","Ababsi",
-                "mabbasi@xavor.com", "9234", "AD1", "AD2", "Lahore",
-                "Punjab", "5400");
+                "mabbasi@xavor.com", "0909",new Address(), new Address());
         customerService.saveOrUpdate(customer);
         customer= new Customer("Mahnoor5","Ababsi",
-                "mabbasi@xavor.com", "9234", "AD1", "AD2", "Lahore",
-                "Punjab", "5400");
+                "mabbasi@xavor.com","0909",new Address(), new Address());
         customerService.saveOrUpdate(customer);
         customer= new Customer("Mahnoor6","Ababsi",
-                "mabbasi@xavor.com", "9234", "AD1", "AD2", "Lahore",
-                "Punjab", "5400");
+                "mabbasi@xavor.com","0909",new Address(), new Address());
         customerService.saveOrUpdate(customer);
 
     }

@@ -9,36 +9,67 @@ public class Customer extends DomainObject {
     private Integer id;
     @Version
     private Integer version;
-    private String firstName, lastName, email, phoneNumber, addressLineOne, addressLineTwo, city, state, zipCode;
+    private String firstName, lastName, email, phoneNumber;
 
-    public Customer(Integer id, String firstName, String lastName, String email, String phoneNumber, String addressLineOne, String addressLineTwo, String city, String state, String zipCode) {
+    @Embedded
+    @AttributeOverride(name="addressLine1",column=@Column(name="addressLine1"))
+    @AttributeOverride(name="addressLine2",column=@Column(name="addressLine2"))
+    @AttributeOverride(name="city",column=@Column(name="city"))
+    @AttributeOverride(name="state",column=@Column(name="state"))
+    @AttributeOverride(name="zipCode",column=@Column(name="zipCode"))
+    private Address billingAddress;
 
-        this.id=id;
+    @Embedded
+    @AttributeOverride(name="addressLine1",column=@Column(name="shippingAddressaddressLine1"))
+    @AttributeOverride(name="addressLine2",column=@Column(name="shippingAddressaddressLine2"))
+    @AttributeOverride(name="city",column=@Column(name="shippingAddresscity"))
+    @AttributeOverride(name="state",column=@Column(name="shippingAddressstate"))
+    @AttributeOverride(name="zipCode",column=@Column(name="shippingAddresszipCode"))
+    private Address shippingAddress;
 
+
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @OneToOne(cascade = {CascadeType.ALL})
+    private User user;
+
+    public Customer(Integer version, String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress, User user) {
+        this.version = version;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.addressLineOne = addressLineOne;
-        this.addressLineTwo = addressLineTwo;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+        this.user = user;
     }
 
-    public Customer(String firstName, String lastName, String email, String phoneNumber, String addressLineOne, String addressLineTwo, String city, String state, String zipCode) {
-
-
+    public Customer(String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.addressLineOne = addressLineOne;
-        this.addressLineTwo = addressLineTwo;
-        this.city = city;
-        this.state = state;
-        this.zipCode = zipCode;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
     }
+
+    public Customer(Integer id, String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
+    }
+
     public Customer() {
 
     }
@@ -92,43 +123,21 @@ public class Customer extends DomainObject {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getAddressLineOne() {
-        return addressLineOne;
+
+
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
-    public void setAddressLineOne(String addressLineOne) {
-        this.addressLineOne = addressLineOne;
+    public void setBillingAddress(Address billingAddress) {
+        this.billingAddress = billingAddress;
     }
 
-    public String getAddressLineTwo() {
-        return addressLineTwo;
+    public Address getShippingAddress() {
+        return shippingAddress;
     }
 
-    public void setAddressLineTwo(String addressLineTwo) {
-        this.addressLineTwo = addressLineTwo;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+    public void setShippingAddress(Address shippingAddress) {
+        this.shippingAddress = shippingAddress;
     }
 }

@@ -95,11 +95,11 @@ public class CustomerControllerTest {
         returnCustomer.setId(id);
         returnCustomer.setFirstName(firstName);
         returnCustomer.setLastName(lastName);
-        returnCustomer.setAddressLineOne(addressLine1);
-        returnCustomer.setAddressLineTwo(addressLine2);
-        returnCustomer.setCity(city);
-        returnCustomer.setState(state);
-        returnCustomer.setZipCode(zipCode);
+//        returnCustomer.setAddressLineOne(addressLine1);
+//        returnCustomer.setAddressLineTwo(addressLine2);
+//        returnCustomer.setCity(city);
+//        returnCustomer.setState(state);
+//        returnCustomer.setZipCode(zipCode);
         returnCustomer.setEmail(email);
         returnCustomer.setPhoneNumber(phoneNumber);
 
@@ -136,11 +136,11 @@ public class CustomerControllerTest {
         assertEquals(id, boundCustomer.getId());
         assertEquals(firstName, boundCustomer.getFirstName());
         assertEquals(lastName, boundCustomer.getLastName());
-        assertEquals(addressLine1, boundCustomer.getAddressLineOne());
-        assertEquals(addressLine2, boundCustomer.getAddressLineTwo());
-        assertEquals(city, boundCustomer.getCity());
-        assertEquals(state, boundCustomer.getState());
-        assertEquals(zipCode, boundCustomer.getZipCode());
+//        assertEquals(addressLine1, boundCustomer.getAddressLineOne());
+//        assertEquals(addressLine2, boundCustomer.getAddressLineTwo());
+//        assertEquals(city, boundCustomer.getCity());
+//        assertEquals(state, boundCustomer.getState());
+//        assertEquals(zipCode, boundCustomer.getZipCode());
         assertEquals(email, boundCustomer.getEmail());
         assertEquals(phoneNumber, boundCustomer.getPhoneNumber());
     }
