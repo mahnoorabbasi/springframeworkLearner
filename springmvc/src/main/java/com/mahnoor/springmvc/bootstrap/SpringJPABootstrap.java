@@ -1,21 +1,31 @@
 package com.mahnoor.springmvc.bootstrap;
 
-import com.mahnoor.springmvc.domain.Address;
-import com.mahnoor.springmvc.domain.Customer;
-import com.mahnoor.springmvc.domain.Product;
+import com.mahnoor.springmvc.domain.*;
+import com.mahnoor.springmvc.enums.OrderStatus;
 import com.mahnoor.springmvc.services.CustomerService;
+import com.mahnoor.springmvc.services.OrderService;
 import com.mahnoor.springmvc.services.ProductService;
+import com.mahnoor.springmvc.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Component
 public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedEvent> {
     private ProductService productService;
     private CustomerService customerService;
+    private UserService userService;
+
+    @Autowired
+    public void setOrderService(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
+    private OrderService orderService;
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
@@ -25,33 +35,120 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
         this.customerService = customerService;
     }
 
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadAllProducts();
         loadAllCustomers();
+        loadCarts();
+        loadOrderHistory();
+
+
+    }
+
+    private void loadOrderHistory() {
+        List<User> allUsers=userService.listAll();
+        List<Product> products=productService.listAll();
+
+
+        allUsers.forEach(user -> {
+
+            Orders order=new Orders();
+            order.setCustomer(user.getCustomer());
+            order.setOrderStatus(OrderStatus.SHIPPED);
+
+            products.forEach(product -> {
+                OrderDetail orderDetail=new OrderDetail();
+                orderDetail.setMyOrder(order);
+                orderDetail.setProduct(product);
+                orderDetail.setQuantity(2);
+                order.addToOrderDetails(orderDetail);
+            });
+
+        });
+
+    }
+
+    private void loadCarts() {
+        List<User> allUsers=userService.listAll();
+        List<Product> products=productService.listAll();
+
+
+        allUsers.forEach(user -> {
+
+            Cart cart=new Cart();
+            user.setCart(cart);
+
+            CartDetail cartDetail=new CartDetail();
+            cartDetail.setProduct(products.get(0));
+            cartDetail.setQuantity(1);
+            user.getCart().addCartDetailList(cartDetail);
+
+            userService.saveOrUpdate(user);
+
+        });
+
+
 
     }
 
     private void loadAllCustomers() {
-
+        User user=new User();
+        user.setUsername("mabbasi");
+        user.setPassword("helloWorld");
         Customer customer= new Customer("Mahnoor1","Ababsi",
                 "mabbasi@xavor.com","0909",new Address(), new Address());
-       customerService.saveOrUpdate(customer);
+        user.setCustomer(customer);
+        userService.saveOrUpdate(user);
+
+
+        user=new User();
+        user.setUsername("mabbasi2");
+        user.setPassword("helloWorld");
         customer= new Customer("Mahnoor2","Ababsi",
                 "mabbasi@xavor.com","0909",new Address(), new Address());
-        customerService.saveOrUpdate(customer);
+
+        user.setCustomer(customer);
+        userService.saveOrUpdate(user);
+
+
+        user=new User();
+        user.setUsername("mabbasi3");
+        user.setPassword("helloWorld");
         customer= new Customer("Mahnoor3","Ababsi",
                 "mabbasi@xavor.com", "0909",new Address(), new Address());
-        customerService.saveOrUpdate(customer);
+        user.setCustomer(customer);
+        userService.saveOrUpdate(user);
+
+        user=new User();
+        user.setUsername("mabbasi4");
+        user.setPassword("helloWorld");
         customer= new Customer("Mahnoor4","Ababsi",
                 "mabbasi@xavor.com", "0909",new Address(), new Address());
-        customerService.saveOrUpdate(customer);
+        user.setCustomer(customer);
+        userService.saveOrUpdate(user);
+
+        user=new User();
+        user.setUsername("mabbasi5");
+        user.setPassword("helloWorld");
         customer= new Customer("Mahnoor5","Ababsi",
                 "mabbasi@xavor.com","0909",new Address(), new Address());
-        customerService.saveOrUpdate(customer);
+        user.setCustomer(customer);
+        userService.saveOrUpdate(user);
+
+        user=new User();
+        user.setUsername("mabbasi6");
+        user.setPassword("helloWorld");
         customer= new Customer("Mahnoor6","Ababsi",
                 "mabbasi@xavor.com","0909",new Address(), new Address());
-        customerService.saveOrUpdate(customer);
+        user.setCustomer(customer);
+        userService.saveOrUpdate(user);
 
     }
 

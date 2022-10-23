@@ -1,18 +1,18 @@
 package com.mahnoor.springmvc.domain;
 
 
-import javax.persistence.*;
-@Entity
-public class User extends DomainObject{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+import org.hibernate.annotations.CreationTimestamp;
 
-    @Version
-    private Integer version;
+import javax.persistence.*;
+import java.util.Date;
+
+@Entity
+public class User extends AbstractSuperClass{
+
     private String username;
     @Transient
     private String password;
+
 
     private String encryptedPassword;
     private boolean isEnabled=true;

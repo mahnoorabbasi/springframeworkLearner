@@ -1,17 +1,20 @@
 package com.mahnoor.springmvc.domain;
 
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
-public class Product  extends DomainObject{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Version
-    private Integer version;
+public class Product  extends AbstractSuperClass{
+
     private String description;
+
+
+
     private BigDecimal price;
     private String imageUrl;
     @Override

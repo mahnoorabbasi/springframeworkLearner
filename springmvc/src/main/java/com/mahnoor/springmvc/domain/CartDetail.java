@@ -1,27 +1,26 @@
 package com.mahnoor.springmvc.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
-public class CartDetail extends DomainObject{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
-    @Version
-    private Integer version;
-
-    @Override
-    public Integer getId() {
-        return id;
-    }
-    @Override
-    public void setId(Integer id) {
-        this.id = id;
-    }
+public class CartDetail extends AbstractSuperClass{
 
     @ManyToOne
     private Cart cart;
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    private Integer quantity;
+
 
     @OneToOne
     private Product product;

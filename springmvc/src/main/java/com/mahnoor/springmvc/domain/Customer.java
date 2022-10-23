@@ -1,15 +1,17 @@
 package com.mahnoor.springmvc.domain;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
-public class Customer extends DomainObject {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    @Version
-    private Integer version;
+public class Customer extends AbstractSuperClass {
+
     private String firstName, lastName, email, phoneNumber;
+
+
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="customer",  orphanRemoval=true)
+    private List<Orders> order= new ArrayList<>();
 
     @Embedded
     @AttributeOverride(name="addressLine1",column=@Column(name="addressLine1"))
@@ -39,6 +41,21 @@ public class Customer extends DomainObject {
 
     @OneToOne(cascade = {CascadeType.ALL})
     private User user;
+
+    public List<Orders> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Orders>  order) {
+        this.order = order;
+    }
+    public void addOrder(Orders order){
+        this.order.add(order);
+    }
+
+    public void removeOrder(Orders order){
+        this.order.remove(order);
+    }
 
     public Customer(Integer version, String firstName, String lastName, String email, String phoneNumber, Address billingAddress, Address shippingAddress, User user) {
         this.version = version;

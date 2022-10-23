@@ -1,20 +1,29 @@
 package com.mahnoor.springmvc.domain;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Cart extends DomainObject{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+public class Cart extends AbstractSuperClass {
 
-    @Version
-    private Integer version;
 
     @OneToOne
     private User user;
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    private Integer quantity;
+
 
     @OneToMany(cascade=CascadeType.ALL, mappedBy="cart",  orphanRemoval=true)
     private List<CartDetail> cartDetailList=new ArrayList<>();
