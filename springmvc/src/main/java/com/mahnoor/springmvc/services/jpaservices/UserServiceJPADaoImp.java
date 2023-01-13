@@ -14,6 +14,7 @@ import java.util.List;
 
 @Service
 @Profile("jpadao")
+
 public class UserServiceJPADaoImp extends  AbstractJPADaoService implements UserService {
 
     private EncryptorService encryptorService;
@@ -64,4 +65,6 @@ public class UserServiceJPADaoImp extends  AbstractJPADaoService implements User
         em.getTransaction().commit();
         em.close();
     }
+
+
 }

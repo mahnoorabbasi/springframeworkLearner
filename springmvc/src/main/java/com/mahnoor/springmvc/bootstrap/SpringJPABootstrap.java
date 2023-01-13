@@ -1,15 +1,15 @@
 package com.mahnoor.springmvc.bootstrap;
 
 import com.mahnoor.springmvc.domain.*;
+import com.mahnoor.springmvc.domain.security.Roles;
 import com.mahnoor.springmvc.enums.OrderStatus;
-import com.mahnoor.springmvc.services.CustomerService;
-import com.mahnoor.springmvc.services.OrderService;
-import com.mahnoor.springmvc.services.ProductService;
-import com.mahnoor.springmvc.services.UserService;
+import com.mahnoor.springmvc.enums.RoleNames;
+import com.mahnoor.springmvc.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -19,6 +19,12 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
     private ProductService productService;
     private CustomerService customerService;
     private UserService userService;
+    private RoleService roleService;
+
+    @Autowired
+    public void setRoleService(RoleService roleService) {
+        this.roleService = roleService;
+    }
 
     @Autowired
     public void setOrderService(OrderService orderService) {
@@ -43,12 +49,36 @@ public class SpringJPABootstrap implements ApplicationListener<ContextRefreshedE
 
 
     @Override
+
     public void onApplicationEvent(ContextRefreshedEvent event) {
         loadAllProducts();
         loadAllCustomers();
         loadCarts();
         loadOrderHistory();
+        loadAllRoles();
+//        assignUsersToDefaultRoles();
 
+
+    }
+
+    private void loadAllRoles() {
+        Roles roles=new Roles();
+        roles.setRole("CUSTOMER");
+        roleService.saveOrUpdate(roles);
+    }
+    @Transactional
+    private void assignUsersToDefaultRoles() {
+        List<Roles> roles=roleService.listAll();
+        List<User> users=userService.listAll();
+
+        roles.forEach(roles1 -> {
+            if(roles1.getRole().equals("CUSTOMER")){
+                users.forEach(user -> {
+                    user.addRoles(roles1);
+                    userService.saveOrUpdate(user);
+                });
+            }
+        });
 
     }
 

@@ -1,18 +1,52 @@
 package com.mahnoor.springmvc.domain;
 
 
+import com.mahnoor.springmvc.domain.security.Roles;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+
 public class User extends AbstractSuperClass{
 
     private String username;
     @Transient
     private String password;
 
+
+    @ManyToMany(mappedBy = "users")
+    //default values will be below:
+    //@JoinTable(name = "USER_ROLE", joinColumns = @JoinColumn(name = "user_id"),
+    //       inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Roles> roles= new ArrayList<>();
+
+    public List<Roles> getRoles() {
+
+        return roles;
+    }
+
+    public void setRoles(List<Roles> roles) {
+        this.roles = roles;
+    }
+
+    public void removeRole(Roles role){
+        this.getRoles().remove(role);
+         role.getUsers().remove(this);
+    }
+    public void addRoles(Roles roles){
+        if(!this.roles.contains(roles)){
+            this.getRoles().add(roles);
+        }
+//        if(!roles.getUsers().contains(this)){
+            roles.getUsers().add(this);
+//        }
+
+
+    }
 
     private String encryptedPassword;
     private boolean isEnabled=true;

@@ -1,0 +1,6 @@
+
+j	java:S116"URename this field "JUICE_PATH" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ù“±
+7
+java:S1170"!Make this final field static too.(Ù“±
+W
+java:S1075"ARefactor your code to get this URI from a customizable parameter.(Ù“±
